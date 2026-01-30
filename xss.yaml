@@ -1,0 +1,63 @@
+id: reflected-xss-html-only
+
+info:
+  name: Reflected Input in HTML Response (Strict)
+  author: kil3r
+  severity: info
+  description: Detects strict reflected input inside quoted HTML context
+  tags: xss,reflection,html,dast
+
+
+http:
+  - method: GET
+
+    payloads:
+      xss:
+        - 'testdz%22xxxxxx'
+        - "testdz%27xxxxxx"
+        - 'testdz%3Ahahahadz'
+        - '%22%3E%3Cxxxxxx'
+        - "%27%3E%3Cxxxxxx"
+        - 'test%22%3E%3Cxx%3Ejhjhj'
+        - "test%27%3E%3Cxx%3Ejhjhj"
+        - 'xxx%22%20%22dsgsgd'
+        - 'testdz%27%22%20%27%22fefe'
+        
+        #- 'testdz"xxxxxx'
+        #- "testdz'xxxxxx"
+        #- 'testdz:hahahadz'
+        #- '"><xxxxxx'
+        #- "'><xxxxxx"
+        #- 'test"><xx>jhjhj'
+        #- "test'><xx>jhjhj"
+
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{xss}}"
+
+    matchers-condition: and
+    matchers:
+
+      # HTML only
+      - type: regex
+        part: header
+        regex:
+          - '(?im)content-type:\s*text/html'
+
+      # STRICT reflection
+      - type: regex
+        part: body
+        regex:
+          - '(?i)"testdz"xxxxxx"'
+          - "(?i)'testdz'xxxxxx'"
+          - "(?i)href='testdz:hahahadz'"
+          - '(?i)href="testdz:hahahadz"'
+          - '(?i)""><xxxxxx'
+          - "(?i)''><xxxxxx"
+          - '(?i)test"><xx>jhjhj'
+          - "(?i)test'><xx>jhjhj"
+          - '(?i)xxx" "dsgsgd'
+          - "(?i)testdz'\" '\"fefe"
