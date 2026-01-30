@@ -1,0 +1,38 @@
+id: ssrf-fuzz-all-params-interactsh-http-dns
+
+info:
+  name: SSRF via Query Parameters (Interactsh HTTP & DNS)
+  author: lowe
+  severity: high
+  description: |
+    Fuzzes all existing query parameters by replacing their values
+    with Interactsh payloads to detect blind SSRF via HTTP or DNS.
+  tags: ssrf,blind,interactsh,fuzzing
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    
+    redirects: true
+    max-redirects: 2
+
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+          - "{{interactsh-url}}"
+          - "https://{{interactsh-url}}"
+
+    stop-at-first-match: true
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "http"
