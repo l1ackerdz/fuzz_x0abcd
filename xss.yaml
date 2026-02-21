@@ -1,35 +1,25 @@
 id: reflected-xss-html-only
 
 info:
-  name: Reflected Input in HTML Response (Strict)
+  name: Reflected Input in HTML Response (Simple)
   author: kil3r
   severity: info
-  description: Detects strict reflected input inside quoted HTML context
   tags: xss,reflection,html,dast
-
 
 http:
   - method: GET
 
     payloads:
       xss:
-        - 'testdz%22xxxxxx'
-        - "testdz%27xxxxxx"
+        - 'testdz%22%20%22xxxxxx'
         - 'testdz%3Ahahahadz'
         - 'xxxx%22%3E%3Cxxxxxx'
         - "xxxx%27%3E%3Cxxxxxx"
         - 'test%22%3E%3Cxx%3Ejhjhj'
         - "test%27%3E%3Cxx%3Ejhjhj"
-        - 'xxx%22%20%22dsgsgd'
         - 'testdz%27%22%20%27%22fefe'
-        
-        #- 'testdz"xxxxxx'
-        #- "testdz'xxxxxx"
-        #- 'testdz:hahahadz'
-        #- '"><xxxxxx'
-        #- "'><xxxxxx"
-        #- 'test"><xx>jhjhj'
-        #- "test'><xx>jhjhj"
+
+    attack: batteringram
 
     fuzzing:
       - part: query
@@ -38,26 +28,24 @@ http:
         fuzz:
           - "{{xss}}"
 
-    matchers-condition: and
+    matchers-condition: or
     matchers:
-
-      # HTML only
-      - type: regex
-        part: header
-        regex:
-          - '(?im)content-type:\s*text/html'
-
-      # STRICT reflection
-      - type: regex
+      - type: word
         part: body
-        regex:
-          - '(?i)"testdz"xxxxxx"'
-          - "(?i)'testdz'xxxxxx'"
-          - "(?i)href='testdz:hahahadz'"
-          - '(?i)href="testdz:hahahadz"'
-          - '(?i)xxxx"><xxxxxx'
-          - "(?i)xxxx'><xxxxxx"
-          - '(?i)test"><xx>jhjhj'
-          - "(?i)test'><xx>jhjhj"
-          - '(?i)xxx" "dsgsgd'
-          - "(?i)testdz'\" '\"fefe"
+        words:
+          - 'testdz" "xxxxxx'
+          - "testdz'xxxxxx"
+          - "href=testdz:hahahadz"
+          - 'xxxx"><xxxxxx'
+          - "xxxx'><xxxxxx"
+          - 'test"><xx>jhjhj'
+          - "test'><xx>jhjhj"
+          - "testdz'\" '\"fefe"
+          - 'TESTDZ" "XXXXXX'
+          - "TESTDZ'XXXXXX"
+          - "href=TESTDZ:HAHAHADZ"
+          - 'XXXX"><XXXXXX'
+          - "XXXX'><XXXXXX"
+          - 'TEST"><XX>JHJHJ'
+          - "TEST'><XX>JHJHJ"
+          - "TESTDZ'\" '\"FEFE"
