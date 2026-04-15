@@ -1,0 +1,84 @@
+id: swagger-openapi-discovery
+
+info:
+  name: Swagger / OpenAPI JSON Exposure
+  author: mino
+  severity: info
+  description: Detect exposed Swagger/OpenAPI JSON endpoints
+  tags: swagger,openapi,api,exposure
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/swagger.json"
+      - "{{BaseURL}}/openapi.json"
+      - "{{BaseURL}}/api-docs.json"
+      - "{{BaseURL}}/spec.json"
+      - "{{BaseURL}}/schema.json"
+      - "{{BaseURL}}/v1/swagger.json"
+      - "{{BaseURL}}/v2/swagger.json"
+      - "{{BaseURL}}/v3/swagger.json"
+      - "{{BaseURL}}/v1/api-docs.json"
+      - "{{BaseURL}}/v2/api-docs.json"
+      - "{{BaseURL}}/v3/api-docs.json"
+      - "{{BaseURL}}/swagger/v1/swagger.json"
+      - "{{BaseURL}}/swagger/v2/swagger.json"
+      - "{{BaseURL}}/swagger/v3/swagger.json"
+      - "{{BaseURL}}/swagger/docs/v1/swagger.json"
+      - "{{BaseURL}}/swagger/docs/v2/swagger.json"
+      - "{{BaseURL}}/api/swagger.json"
+      - "{{BaseURL}}/api/openapi.json"
+      - "{{BaseURL}}/api/api-docs.json"
+      - "{{BaseURL}}/api/v1/swagger.json"
+      - "{{BaseURL}}/api/v2/swagger.json"
+      - "{{BaseURL}}/api/v3/swagger.json"
+      - "{{BaseURL}}/api/v1/openapi.json"
+      - "{{BaseURL}}/api/v2/openapi.json"
+      - "{{BaseURL}}/api/v3/openapi.json"
+      - "{{BaseURL}}/internal/swagger.json"
+      - "{{BaseURL}}/private/swagger.json"
+      - "{{BaseURL}}/admin/swagger.json"
+      - "{{BaseURL}}/dev/swagger.json"
+      - "{{BaseURL}}/test/swagger.json"
+      - "{{BaseURL}}/staging/swagger.json"
+      - "{{BaseURL}}/uat/swagger.json"
+      - "{{BaseURL}}/openapi/v1.json"
+      - "{{BaseURL}}/openapi/v2.json"
+      - "{{BaseURL}}/openapi/v3.json"
+      - "{{BaseURL}}/swagger-config.json"
+      - "{{BaseURL}}/swagger/config.json"
+      - "{{BaseURL}}/api-docs/swagger.json"
+      - "{{BaseURL}}/api-docs/openapi.json"
+      - "{{BaseURL}}/swagger-resources.json"
+      - "{{BaseURL}}/swagger/v1/api-docs.json"
+      - "{{BaseURL}}/swagger/v2/api-docs.json"
+      - "{{BaseURL}}/api-explorer/swagger.json"
+      - "{{BaseURL}}/explorer/swagger.json"
+      - "{{BaseURL}}/Swagger.json"
+      - "{{BaseURL}}/OpenAPI.json"
+      - "{{BaseURL}}/API-DOCS.json"
+
+    matchers-condition: and
+
+    matchers:
+      # Ensure JSON response
+      - type: word
+        part: header
+        words:
+          - "application/json"
+
+      # Core OpenAPI indicators
+      - type: word
+        part: body
+        words:
+          - "\"openapi\""
+          - "\"info\""
+          - "\"schema\""
+        condition: or
+
+      # Stronger validation (structure)
+      - type: regex
+        part: body
+        regex:
+          - '"openapi"\s*:\s*".*?"'
+          - '"info"\s*:\s*\{'
