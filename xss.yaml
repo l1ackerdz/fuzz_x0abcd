@@ -36,6 +36,7 @@ http:
           - 'testdz" "xxxxxx'
           - "testdz'xxxxxx"
           - "href=testdz:hahahadz"
+          - 'href="testdz:hahahadz"'
           - 'xxxx"><xxxxxx'
           - "xxxx'><xxxxxx"
           - 'test"><xx>jhjhj'
@@ -46,6 +47,9 @@ http:
           - "href=TESTDZ:HAHAHADZ"
           - "HREF=testdz:hahahadz"
           - "HREF=TESTDZ:HAHAHADZ"
+          - 'href="TESTDZ:HAHAHADZ"'
+          - 'HREF="testdz:hahahadz"'
+          - 'HREF="TESTDZ:HAHAHADZ"'
           - 'XXXX"><XXXXXX'
           - "XXXX'><XXXXXX"
           - 'TEST"><XX>JHJHJ'
