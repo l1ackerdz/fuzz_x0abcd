@@ -242,7 +242,6 @@
 .revision
 .rhost
 .rhosts
-.robots.txt
 .rocketeer/
 .rsync_cache
 .rsync_cache/
@@ -826,7 +825,6 @@ _wpeprivate/
 _wpeprivate/config.json
 _www
 _yardoc/
-a%5c.aspx
 a.out
 a2e2gp2r2/x.jsp
 a_gauche
@@ -2224,7 +2222,6 @@ doc/stable.version
 docker-compose-dev.yml
 docker-compose.yml
 docker/
-docpicker/internal_proxy/https/127.0.0.1:9043/ibm/console
 docs/_build/
 docs/export-demo.xml
 docs/html/admin/ch01.html
@@ -3441,7 +3438,6 @@ phpinfo.php4
 phpinfo.php5
 phpinfos.php
 phpini.bak
-phpliteadmin%202.php
 phpliteadmin.php
 phpm/
 phpma/index.php
@@ -3492,7 +3488,6 @@ physican/login.do
 pi.php5
 pids
 pinfo.php
-ping
 pip-delete-this-directory.txt
 pip-log.txt
 piwigo/
@@ -3841,7 +3836,6 @@ snoop/
 snoop2
 snort/
 snp
-soap/
 soapdocs/
 soapserver/
 soft-admin
@@ -19124,7 +19118,6 @@ qpolling
 qpres
 qq
 qr
-qrcode
 qry
 qs
 qs3
