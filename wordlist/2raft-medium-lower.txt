@@ -1555,7 +1555,6 @@ autom4te.cache
 autoscan.log
 awstats.conf
 awstats.pl
-axis//happyaxis.jsp
 axis1/axis1-admin/
 axis2/axis2-admin/
 azure-pipelines.yml
@@ -2381,7 +2380,6 @@ ext/mkinstalldirs
 ext/modules/
 ext/run-tests.php
 extdirect
-extjs/resources//charts.swf
 extra_admin
 extras/documentation
 ezadmin
@@ -2538,7 +2536,6 @@ h2console
 hac
 hac/
 hacsfiles
-happyaxis.jsp
 haproxy/
 hc_admin
 heapdump
@@ -2771,7 +2768,6 @@ js/prepod.js
 js/prod.js
 js/qa.js
 js/routing
-js/yui/uploader/assets/uploader.swf
 jsp-examples/
 jsp-reverse.jsp
 jsp/extension/login.jsp
